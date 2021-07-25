@@ -5,9 +5,6 @@
 #
 #     https://vivien.github.io/i3blocks
 
-
-
-
 # Global properties
 command=~/.config/i3blocks/scripts/$BLOCK_NAMEXX
 align=center
@@ -67,10 +64,18 @@ label=<span color="#8be9fd"> </span>
 command=echo "$USER"
 interval=once
 
-
+[time]
+label=<span color="#edb95f"> </span>
+border=#edb95f
+border_top=1
+border_right=0
+border_bottom=0
+border_left=0
+command=date '+%H:%M:%S'
+interval=1
 
 [date]
-command=LC_ALL="de_DE.UTF-8" date '+%Y    %B %d   %A' | awk '{ printf "%s<span color=\"#ff5555\">%s%s</span>%s<span color=\"#ff5555\">%s %s</span>\n", $1, $2, $3, $4, $5, $6 }'
+command=LC_ALL="de_DE.UTF-8" date '+%A %d %B %Y' | awk '{ printf "%s, <span color=\"#ff5555\">%s </span>%s <span color=\"#ff5555\">%s</span>\n", $1, $2, $3, $4 }'
 interval=60
 label=<span color="#ff5555"> </span>
 border=#ff5555
@@ -78,8 +83,3 @@ border_top=1
 border_right=0
 border_bottom=0
 border_left=0
-
-
-#[time]
-#command=date '+%Y-%m-%d %H:%M:%S'
-#interval=1
