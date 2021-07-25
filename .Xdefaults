@@ -1,0 +1,42 @@
+! terminal colors ------------------------------------------------------------
+
+! special
+*.foreground:   #ffffff
+*.background:   #0e0e0e
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #2e3436
+*.color8:       #888a85
+
+! red
+*.color1:       #ef6b7b
+*.color9:       #ed5466
+
+! green
+*.color2:       #3afa76
+*.color10:      #4dff7a
+
+! yellow
+*.color3:       #fff900
+*.color11:      #fce94f
+
+! blue
+*.color4:       #56a6ff
+*.color12:      #729fcf
+
+! magenta
+*.color5:       #a615c5
+*.color13:      #c488ff
+
+! cyan
+*.color6:       #00d6ff
+*.color14:      #35c5ce
+
+! white
+*.color7:       #707070
+*.color15:      #909090
+
+! xterm -----------------------------------------------------------------------
+
+xterm*faceName: Hack
