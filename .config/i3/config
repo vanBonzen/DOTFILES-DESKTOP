@@ -29,6 +29,7 @@ client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $indicator-color
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $indicator-color
 
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
@@ -174,11 +175,22 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+# https://github.com/ValveSoftware/steam-for-linux/issues/1040
+for_window [ title="^Friends$"] floating enable
+for_window [ title="Steam - News"] floating enable
+for_window [ title=".* - Chat"] floating enable
+for_window [ title="^Settings$"] floating enable
+for_window [ title=".* - event started"] floating enable
+for_window [ title=".* CD key"] floating enable
+for_window [ title="^Steam - Self Updater$"] floating enable
+for_window [ title="^Screenshot Uploader$"] floating enable
+for_window [ title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [ title="^Steam Keyboard$"] floating enable
+
 # nextshot
 # monitor
 bindsym Print exec --no-startup-id "nextshot -m"
-# window
-bindsym Mod4+Print exec --no-startup-id "nextshot -w"
+# windowMonospaceartup-id "nextshot -w"
 # area
 bindsym Shift+Print exec --no-startup-id "nextshot -a"
 # monitor clipboard
@@ -233,7 +245,7 @@ bar {
                 statusline $text-color
                 separator $bg-color
                 #                  border               backgr.                 text
-                focused_workspace  $text-color          $bg-color               $text-color
+                focused_workspace  $text-color          $bg-color               $text-colorc
                 active_workspace   $text-color          #5f676a                 #333333
                 inactive_workspace $text-color          $inactive-bg-color      $text-color
                 urgent_workspace   #2f343a              #900000                 $text-color
@@ -256,5 +268,11 @@ exec feh --bg-scale ~/Pictures/background.jpg
 
 # compositor
 exec picom -b
+
+# notifications
+exec dunst
+
+# PulseAudio
+exec pusleaudio --start
 
 

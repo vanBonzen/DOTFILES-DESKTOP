@@ -3,13 +3,12 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
-# locale
 LANG="en_US.UTF-8"
+export EDITOR=vim
 
 setopt autocd beep extendedglob
 bindkey -e
 # End of lines configured by zsh-newuser-install
-
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/mr-perfection/.zshrc'
 
@@ -20,8 +19,7 @@ compinit
 # Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 
-# exports
-export EDITOR=vim
+#export DEFAULT_USER="mr-perfection"
 export TERM="xterm-256color"
 export ZSH=/usr/share/oh-my-zsh
 
@@ -29,9 +27,17 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE="nerdfont-complete"
 source $ZSH/themes/powerlevel9k/powerlevel9k.zsh-theme
 
-POWERLEVEL9K_FOLDER_ICON="?"
-POWERLEVEL9K_HOME_SUB_ICON="$(print_icon "HOME_ICON")"
+POWERLEVEL9K_FOLDER_ICON=$'\ufc6e'
+POWERLEVEL9K_HOME_SUB_ICON=$'\ufc6e'
 POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon "LEFT_SUBSEGMENT_SEPARATOR") "
+POWERLEVEL9K_VCS_GIT_ICON=$'\uf1d3'
+
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='grey89'
+POWERLEVEL9K_HOST_LOCAL_FOREGROUND='mediumpurple1'
+POWERLEVEL9K_DIR_HOME_BACKGROUND='mediumpurple1'
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='mediumpurple1'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='mediumpurple1'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='black'
 
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
 
@@ -41,11 +47,13 @@ POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='black'
 POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='178'
 POWERLEVEL9K_NVM_BACKGROUND="238"
 POWERLEVEL9K_NVM_FOREGROUND="green"
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="blue"
 POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="015"
 
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+
 POWERLEVEL9K_TIME_BACKGROUND='255'
-#POWERLEVEL9K_COMMAND_TIME_FOREGROUND='gray'
+POWERLEVEL9K_COMMAND_TIME_FOREGROUND='gray'
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='245'
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='black'
 
@@ -98,6 +106,29 @@ rule () {
 	print -P '%f'
 }
 
+function _my_clear() {
+	echo
+	rule
+	zle clear-screen
+}
+zle -N _my_clear
+bindkey '^l' _my_clear
+
+# Ctrl-O opens zsh at the current location, and on exit, cd into ranger's last location.
+ranger-cd() {
+	tempfile=$(mktemp)
+	ranger --choosedir="$tempfile" "${@:-$(pwd)}" < $TTY
+	test -f "$tempfile" &&
+	if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+	cd -- "$(cat "$tempfile")"
+	fi
+	rm -f -- "$tempfile"
+	# hacky way of transferring over previous command and updating the screen
+	VISUAL=true zle edit-command-line
+}
+zle -N ranger-cd
+bindkey '^o' ranger-cd
+
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 
@@ -107,3 +138,5 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+alias neofetch-colors='neofetch --ascii_colors 141 --colors 141 141 141 141'

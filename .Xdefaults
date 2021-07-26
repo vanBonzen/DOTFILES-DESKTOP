@@ -39,4 +39,5 @@
 
 ! xterm -----------------------------------------------------------------------
 
-xterm*faceName: Hack
+xterm*faceName: Source Code Pro for Powerline:size=9
+
